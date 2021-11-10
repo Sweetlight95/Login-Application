@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function confirmRegistration() {
         if (Object.keys(registerObject).length === 4){
             try{
-                let userRepository = LocalRepository.getItem("ewauser")
+                let userRepository = LocalRepository.getItem("ewausers")
                 if (userRepository === null){
                     let repository = [registerObject]
-                    localStorage.setItem("ewauser", JSON.stringify(repository))
+                    localStorage.setItem("ewausers", JSON.stringify(repository))
                 } else {
                     let previousRepository = JSON.parse(userRepository)
                     let updatedRepository = [...previousRepository, registerObject]
-                    localStorage.setItem("ewauser", JSON.stringify(updatedRepository))
+                    localStorage.setItem("ewausers", JSON.stringify(updatedRepository))
                 }
             } catch(error) {
                 console.log(error)
@@ -26,33 +26,37 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Incomplete User Info")
         }
     }
+    if(document.getElementsByClassName('register_btn').length > 0) {
     let button = document.getElementsByClassName("register_btn")[0]
     button.addEventListener("click", () => confirmRegistration())
-
+}
 
     function handleInputChange(e) {
     registerObject = {...registerObject, [e.target.name]: e.target.value}
 }
 
     function handleLoginChange(e) {
-    registerObject = {...loginObject, [e.target.name]: e.target.value}
+    loginObject = {...loginObject, [e.target.name]: e.target.value}
 }
-
+    if(document.getElementsByClassName('register_btn').length > 0) {
     let registerInputFields = document.getElementsByClassName('register_input')
     Array.from(registerInputFields).forEach((inputField) => 
     inputField.addEventListener("input", (e) => handleInputChange(e)))
+    }
 
-
+    if(document.getElementsByClassName('login_btn').length > 0){
     let loginInputFields = document.getElementsByClassName('login_input')
     Array.from(loginInputFields).forEach((inputField) => 
     inputField.addEventListener("input", (e) => handleLoginChange(e)))
+    } 
 
-    function comfirmLogin(){
-        let {first_name, password} = registerObject
+    function confirmLogin(){
+        let userRepository = JSON.parse(localStorage.getItem("ewausers"))
+        let {email, password} = loginObject
 
-            if(repository.findIndex(user => user.first_name === first_name) !== -1){
+            if(repository.findIndex(user => user.email === email) !== -1){
 
-            if(repository.find(user => user.first_name === first_name).password === password){
+            if(repository.find(user => user.email === email).password === password){
                 localStorage.setItem("ewauser", JSON.stringify(registerObject))
                 location.href = 'home.html'
                 // window.location.href = etc
@@ -63,6 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('User Does Not Exist')
         }
     }
+    let loginButton = document.getElementsByClassName("login_btn")[0]
+    loginButton.addEventListener("click", () => confirmLogin())
+
 })
 
 
