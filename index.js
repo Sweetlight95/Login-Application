@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     let registerObject ={}
+    let loginObject = {}
     // let repository = [
     //     {first_name: "Rebecca", last_name: "Odoemela", phone_number: "08152728792", password:"2733"},
     //     {first_name: "ujay", last_name: "Eronmol", phone_number: "09876775554", password:"745643"},
@@ -33,10 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
     registerObject = {...registerObject, [e.target.name]: e.target.value}
 }
 
-    let inputFields = document.getElementsByTagName('input')
+    function handleLoginChange(e) {
+    registerObject = {...loginObject, [e.target.name]: e.target.value}
+}
 
-    Array.from(inputFields).forEach((inputField) => 
+    let registerInputFields = document.getElementsByClassName('register_input')
+    Array.from(registerInputFields).forEach((inputField) => 
     inputField.addEventListener("input", (e) => handleInputChange(e)))
+
+
+    let loginInputFields = document.getElementsByClassName('login_input')
+    Array.from(loginInputFields).forEach((inputField) => 
+    inputField.addEventListener("input", (e) => handleLoginChange(e)))
 
     function comfirmLogin(){
         let {first_name, password} = registerObject
